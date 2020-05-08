@@ -1,7 +1,5 @@
 ### Code Challenge for
 # GeniusPlaza
- Code Challenge for GeniusPlaza
-
 by
 ### Maxwell Hunter (mhunterak)
 
