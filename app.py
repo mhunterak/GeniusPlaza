@@ -32,15 +32,14 @@ Extra credit 
 If you have extra time, implement any of the following features for extra credit. Or just be prepared to, like, talk about them: 
 # TODO
 ● Deploy the server to an accessible URL 
-# TODO
 ● Number of “unique” visitors to a given short link (you can define how we track visitors) 
-# TODO
 ● A “global stats” endpoint, that aggregates some interesting stats across your URL-shortening platform (e.g., total number of links/visits per domain, histogram of total visits across the site)
 
 '''
 
 import hashlib
 import json
+import os
 import time
 import urllib
 
@@ -51,6 +50,13 @@ from peewee import *
 from playhouse.shortcuts import model_to_dict, dict_to_model
 
 import models
+
+db_user = os.environ.get('DB_USER')
+db_name = os.environ.get('DB_NAME')
+db_pass = os.environ.get('DB_PASS')
+db_host = os.environ.get('DB_HOST')
+
+
 
 # TODO: these should come from ENV vars in production
 DEBUG = True
@@ -197,6 +203,7 @@ api.add_resource(Stats, '/<urlhash>/stats/')
 
 if __name__ == '__main__':
     models.initialize()
+    models.DATABASE.init(db_name, host=db_host, user=db_user, password=db_pass)
     if DEBUG:
         app.run(debug=DEBUG, host=HOST, port=PORT)
     # TODO: make an else for running in prod
