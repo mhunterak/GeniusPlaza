@@ -39,7 +39,6 @@ If you have extra time, implement any of the following features for extra credit
 
 import hashlib
 import json
-import os
 import time
 import urllib
 
@@ -52,9 +51,9 @@ from playhouse.shortcuts import model_to_dict, dict_to_model
 import models
 
 # TODO: these should come from ENV vars in production
-DEBUG = True
+DEBUG = False
 HOST = '0.0.0.0'
-PORT = 5000
+PORT = 80
 baseurl = '{}:{}'.format(HOST, PORT)
 
 app = Flask(__name__)
@@ -196,6 +195,5 @@ api.add_resource(Stats, '/<urlhash>/stats/')
 
 if __name__ == '__main__':
     models.initialize()
-    if DEBUG:
-        app.run(debug=DEBUG, host=HOST, port=PORT)
+    app.run()
     # TODO: make an else for running in prod
