@@ -126,7 +126,7 @@ class URL(Resource):
     def get(self, urlhash):
         try:
             url = models.URL.get(hashstr=urlhash)
-            models.Visit.create(url=url)
+            models.Visit.create(url=url, ip=request.remote_addr)
             return redirect(url.link)
         except DoesNotExist:
             abort(404)
@@ -175,7 +175,10 @@ class Stats(Resource):
                 models.URL.hashstr == urlhash)
 
         histogram = {}
+        visitors = []
         for visit in visits:
+            if not visit.ip in visitors:
+                visitors.append(visit.ip)
             date_str = str(visit.date)
             if date_str in histogram:
                 histogram[date_str] += 1
@@ -185,6 +188,7 @@ class Stats(Resource):
             'created': created,
             'visits': visits.count(),
             'histogram': histogram,
+            'unique visitors':len(visitors)
         }
 
 

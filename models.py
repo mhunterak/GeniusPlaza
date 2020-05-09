@@ -37,6 +37,7 @@ class Visit(Model):
     date = DateField(default=dt.now)
     # the url that was accessed (the model, not the actual link)
     url = ForeignKeyField(URL, related_name='visit')
+    ip = CharField(max_length=16)
 
     class Meta:
         database = DATABASE
