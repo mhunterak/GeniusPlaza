@@ -51,13 +51,6 @@ from playhouse.shortcuts import model_to_dict, dict_to_model
 
 import models
 
-db_user = os.environ.get('DB_USER')
-db_name = os.environ.get('DB_NAME')
-db_pass = os.environ.get('DB_PASS')
-db_host = os.environ.get('DB_HOST')
-
-
-
 # TODO: these should come from ENV vars in production
 DEBUG = True
 HOST = '0.0.0.0'
@@ -203,7 +196,6 @@ api.add_resource(Stats, '/<urlhash>/stats/')
 
 if __name__ == '__main__':
     models.initialize()
-    models.DATABASE.init(db_name, host=db_host, user=db_user, password=db_pass)
     if DEBUG:
         app.run(debug=DEBUG, host=HOST, port=PORT)
     # TODO: make an else for running in prod
